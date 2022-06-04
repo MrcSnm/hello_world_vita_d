@@ -46,12 +46,12 @@ eboot.bin: $(PROJECT).velf
 param.sfo:
 	vita-mksfoex -s TITLE_ID="$(PROJECT_TITLEID)" "$(PROJECT_TITLE)" param.sfo
 
-$(PROJECT).velf: $(DUB) $(PROJECT).elf
+$(PROJECT).velf: $(PROJECT).elf
 	$(STRIP) -g $<
 	vita-elf-create $< $@
 
 $(PROJECT).elf: $(OBJS)
-	$(CXX) $(CXXFLAGS) $^ -L/usr/local/vitasdk/arm-vita-eabi/lib/ $(LIBS) -o $@
+	$(CXX) $(CXXFLAGS) $^ -L/usr/local/vitasdk/arm-vita-eabi/lib/ -L. $(LIBS) -o $@
 
 out/%.o : src/%.cpp | $(OBJ_DIRS)
 	arm-vita-eabi-g++ -c $(CXXFLAGS) -o $@ $<
@@ -61,9 +61,6 @@ out/%.o : src/%.c | $(OBJ_DIRS)
 
 out/%.o : src/%.d | $(OBJ_DIRS)
 	$(DC) -c $(DFLAGS) --od=out/ $<
-
-$(DUB):
-	dub --compiler=ldc2 --arch=armv7a-unknown-unknown
 
 $(OBJ_DIRS):
 	mkdir -p $@

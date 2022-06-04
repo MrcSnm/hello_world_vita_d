@@ -1,5 +1,7 @@
 #include <psp2/kernel/threadmgr.h>
 #include <psp2/kernel/processmgr.h>
+#include <stdlib.h>
+#include <assert.h>
 #include <stdio.h>
 #include "debugScreen.h"
 

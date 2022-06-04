@@ -9,7 +9,14 @@ hello_world_vita_d.dll
 hello_world_vita_d.a
 hello_world_vita_d.lib
 hello_world_vita_d-test-*
+out
 *.exe
 *.o
 *.obj
 *.lst
+eboot.bin
+libDLibrary.a
+param.sfo
+vita_sample.elf
+vita_sample.velf
+vita_sample.vpk
