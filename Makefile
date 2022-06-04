@@ -26,7 +26,7 @@ OBJ_DIRS := $(addprefix out/, $(dir $(SRC_C:src/%.c=%.o))) $(addprefix out/, $(d
 OBJS := $(addprefix out/, $(SRC_C:src/%.c=%.o)) $(addprefix out/, $(SRC_CPP:src/%.cpp=%.o)) $(addprefix out/, $(SRC_D:src/%.d=%.o))
 
 # Needed by psvDebugScreenPrintf
-LIBS += -lSceDisplay_stub
+LIBS += -lSceDisplay_stub -lDLibrary
 
 all: package
 
@@ -46,15 +46,12 @@ eboot.bin: $(PROJECT).velf
 param.sfo:
 	vita-mksfoex -s TITLE_ID="$(PROJECT_TITLEID)" "$(PROJECT_TITLE)" param.sfo
 
-$(PROJECT).velf: $(PROJECT).elf
+$(PROJECT).velf: $(DUB) $(PROJECT).elf
 	$(STRIP) -g $<
 	vita-elf-create $< $@
 
 $(PROJECT).elf: $(OBJS)
 	$(CXX) $(CXXFLAGS) $^ -L/usr/local/vitasdk/arm-vita-eabi/lib/ $(LIBS) -o $@
-
-$(OBJ_DIRS):
-	mkdir -p $@
 
 out/%.o : src/%.cpp | $(OBJ_DIRS)
 	arm-vita-eabi-g++ -c $(CXXFLAGS) -o $@ $<
@@ -64,6 +61,13 @@ out/%.o : src/%.c | $(OBJ_DIRS)
 
 out/%.o : src/%.d | $(OBJ_DIRS)
 	$(DC) -c $(DFLAGS) --od=out/ $<
+
+$(DUB):
+	dub --compiler=ldc2 --arch=armv7a-unknown-unknown
+
+$(OBJ_DIRS):
+	mkdir -p $@
+
 
 clean:
 	rm -f $(PROJECT).velf $(PROJECT).elf $(PROJECT).vpk param.sfo eboot.bin $(OBJS)

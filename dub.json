@@ -1,0 +1,31 @@
+{
+	"authors": [
+		"Hipreme"
+	],
+	"copyright": "Copyright © 2022, Hipreme",
+	"dependencies": {
+		"lwdr": "~>0.3.0"
+	},
+	"targetName": "DLibrary",
+	"dflags": [
+		"-mtriple=armv7a-unknown-unknown",
+		"-mcpu=cortex-a9",
+		"-g",
+		"-float-abi=hard",
+		"-O0",
+		"--boundscheck=off",
+		"-fthread-model=local-exec"
+	],
+	"toolchainRequirements": {
+		"dmd": "no",
+		"gdc": "no"
+	},
+	"versions": [
+		"LWDR_DynamicArray"
+	],
+	"sourcePaths": ["source_d"],
+	"targetType": "staticLibrary",
+	"description": "A minimal D application.",
+	"license": "proprietary",
+	"name": "test"
+}
