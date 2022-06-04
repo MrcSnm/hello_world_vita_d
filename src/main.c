@@ -9,6 +9,12 @@
 #define printf psvDebugScreenPrintf
 
 
+typedef struct IntDynamicArray
+{
+	int* values;
+	unsigned long long length;
+} IntDynamicArray;
+
 
 //LWDR(Lightweight D runtime backend stuff) Do not remove those lines. Please find another way to support a better assertion
 void* rtosbackend_heapalloc(unsigned int sz){return malloc(sz);}
@@ -19,8 +25,11 @@ void rtosbackend_arrayBoundFailure(char* file, uint line){assert(0);}
 
 
 extern char* getStringFromD();
-float getFloatFromD();
-int getDynamicArraySum();
+extern void* createTest();
+extern void checkDynamicCast(void* _TestInstance);
+extern float getFloatFromD();
+extern int getDynamicArraySum();
+extern IntDynamicArray intDynamicArrayFromD();
 
 int main(int argc, char *argv[]) {
 	psvDebugScreenInit();
@@ -31,6 +40,15 @@ int main(int argc, char *argv[]) {
 		getFloatFromD(),
 		getDynamicArraySum()
 	);
+	void* _TestInstance = createTest();
+	checkDynamicCast(_TestInstance);
+
+	printf("\nArray Test: ");
+	IntDynamicArray dArray = intDynamicArrayFromD();
+	for(int i = 0; i < dArray.length; i++)
+		printf("%d ", dArray.values[i]);
+	printf("\n");
+
 	
 	sceKernelDelayThread(3*1000000); // Wait for 3 seconds
 	sceKernelExitProcess(0);
