@@ -26,7 +26,7 @@ OBJ_DIRS := $(addprefix out/, $(dir $(SRC_C:src/%.c=%.o))) $(addprefix out/, $(d
 OBJS := $(addprefix out/, $(SRC_C:src/%.c=%.o)) $(addprefix out/, $(SRC_CPP:src/%.cpp=%.o)) $(addprefix out/, $(SRC_D:src/%.d=%.o))
 
 # Needed by psvDebugScreenPrintf
-LIBS += -lSceDisplay_stub -lDLibrary
+LIBS += -lSceDisplay_stub -lpthread -lDLibrary
 
 all: package
 
@@ -50,7 +50,7 @@ $(PROJECT).velf: $(PROJECT).elf
 	$(STRIP) -g $<
 	vita-elf-create $< $@
 
-$(PROJECT).elf: $(OBJS)
+$(PROJECT).elf: libDLibrary.a $(OBJS)
 	$(CXX) $(CXXFLAGS) $^ -L/usr/local/vitasdk/arm-vita-eabi/lib/ -L. $(LIBS) -o $@
 
 out/%.o : src/%.cpp | $(OBJ_DIRS)

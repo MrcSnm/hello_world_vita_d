@@ -9,6 +9,7 @@ struct IntDynamicArray
 
 class Test
 {
+	__gshared static int[] testStaticConstructor;
 	immutable(char*) getStringFromD()
 	{
 		return "Hello World from D! Simple Test".ptr;
@@ -63,10 +64,29 @@ extern(C) int getDynamicArraySum()
 	return sum;
 }
 
+
 extern(C) IntDynamicArray intDynamicArrayFromD()
 {
-	int[] arr;
+	return IntDynamicArray(Test.testStaticConstructor.ptr, Test.testStaticConstructor.length);
+}
+
+
+extern(C) extern int _Cmain(int argc, const(char*) argv);
+
+//Tests wether D can control the main function
+extern(C) int main(int argc, const(char*) argv)
+{
+	import lwdr;
+	//LWDR.startRuntime(); startRuntime and stopRuntime doesn't work yet :(
+	int ret = _Cmain(argc, argv);
+	//LWDR.stopRuntime();
+	return ret;
+}
+
+
+
+static this()
+{
 	for(int i = 0; i < 5; i++)
-		arr~= i;
-	return IntDynamicArray(arr.ptr, arr.length);
+		Test.testStaticConstructor~= i;
 }

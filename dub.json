@@ -4,7 +4,7 @@
 	],
 	"copyright": "Copyright © 2022, Hipreme",
 	"dependencies": {
-		"lwdr": "~>0.3.0"
+		"lwdr": "~>0.4.0-beta.1"
 	},
 	"targetName": "DLibrary",
 	"dflags": [
@@ -14,6 +14,7 @@
 		"-float-abi=hard",
 		"-O0",
 		"--boundscheck=off",
+		"--relocation-model=static",
 		"-fthread-model=local-exec"
 	],
 	"toolchainRequirements": {
@@ -21,7 +22,9 @@
 		"gdc": "no"
 	},
 	"versions": [
-		"LWDR_DynamicArray"
+		"LWDR_DynamicArray",
+		"LWDR_ModuleCtors",
+		"LWDR_TLS"
 	],
 	"sourcePaths": ["source_d"],
 	"targetType": "staticLibrary",
