@@ -24,7 +24,8 @@
 	"versions": [
 		"LWDR_DynamicArray",
 		"LWDR_ModuleCtors",
-		"LWDR_TLS"
+		"LWDR_TLS",
+		"PSVita", "PSV"
 	],
 	"sourcePaths": ["source_d"],
 	"targetType": "staticLibrary",

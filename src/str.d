@@ -1,5 +1,5 @@
 
-extern(C) char* strFromD()
+extern(C) immutable(char*) strFromD()
 {
-    return cast(typeof(return))"Hello my mother fucking world!\0".ptr;
+    return __MODULE__.stringof.ptr;
 }

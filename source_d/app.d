@@ -21,7 +21,7 @@ class UltraTest : Test
 {
 	override immutable(char*) getStringFromD()
 	{
-		return "Hello World from D!!! Ultra Test!".ptr;
+		return this.classinfo.name.ptr;
 	}
 }
 
@@ -77,9 +77,9 @@ extern(C) extern int _Cmain(int argc, const(char*) argv);
 extern(C) int main(int argc, const(char*) argv)
 {
 	import lwdr;
-	//LWDR.startRuntime(); startRuntime and stopRuntime doesn't work yet :(
+	// LWDR.startRuntime();// startRuntime and stopRuntime doesn't work yet :(
 	int ret = _Cmain(argc, argv);
-	//LWDR.stopRuntime();
+	// LWDR.stopRuntime();
 	return ret;
 }
 
